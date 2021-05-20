@@ -73,6 +73,22 @@ $file=$_FILES['photo'];
 	}
 
 ?>
+<?php
+    $connection = mysqli_connect("localhost","root","" ,"donatetheblood");
+	if(isset($_SESSION['user_id'])  && !empty($_SESSION['user_id'])){
+        $x=$_SESSION['user_id'];
+	$sql2="SELECT verifytwo from  donor WHERE id='$x'";
+		$result =mysqli_query( $connection,$sql2);
+		   if(mysqli_num_rows($result)>0){
+  
+			while($row = mysqli_fetch_assoc($result)){
+			  $verifytwo=$row['verifytwo'];
+			}
+		  }
+		}
+
+?>
+ 
 
 			<div class="container" style="padding: 60px 0;">
 			<div class="row">
@@ -89,7 +105,11 @@ $file=$_FILES['photo'];
 							<p class="text-center">Here you can See Your Donate History</p>
 							<div class="test-success text-center" id="data" style="margin-top: 20px;"><?php if(isset($showForm)) echo $showForm?><!-- Display Message here--></div>
 	<form class="form-group" action="" method="post" enctype="multipart/form-data">
-			<div class="form-group">
+	<?php
+	            if($verifytwo=='3'|| $verifytwo=='0')
+				{
+			echo'<div class="form-group">
+			
 						<label for="file">Upload Image of the Identity Document</label>
 						<br>
 						<input type="file" class="form-control" name="photo" required="" 
@@ -100,14 +120,16 @@ $file=$_FILES['photo'];
 						<button id="submit" name="submit" type="submit" class="btn btn-lg btn-danger center-aligned" style="margin-top: 20px;">SUBMIT
             </button>
 			</div>
-	</form>
+	</form>';
+				}
+	?>
 
 							
-<?php
-    $connection = mysqli_connect("localhost","root","" ,"donatetheblood");
 
-?>
 	<?php
+
+	    if($verifytwo=='1')
+		{
 	    print "<b>Donated Details: <b>";
 									    
         $user=$_SESSION['user_id'];
@@ -131,6 +153,8 @@ $file=$_FILES['photo'];
 	    <span>'.$row['city'].'</span>
         						           				
 		</div>';
+
+		 }
 									            
         }
 
