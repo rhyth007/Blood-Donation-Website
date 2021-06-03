@@ -197,7 +197,7 @@ body {
                               
 							}
 
-							 if($safeDate=='0' && $verify=='1')
+							 if($safeDate=='0' && $verify=='1' && $verifytwo=='0')
 							 {
 								
 							 	echo '<form target="" method="post">
@@ -215,8 +215,16 @@ body {
 							 </div>';
                                         
 							 }
-							 else if(($verifytwo=='0') ||(($verifytwo=='3')))
+							 if($verify!='2')
 							 {
+							  if(($verifytwo=='0') ||(($verifytwo=='3')))
+							 {
+								if($safeDate=='0')
+								{
+									echo '';
+
+								}
+								else{
 								echo '<div class="donors_data">
 								<span class ="name">Donation Verifying!</span>
 								<span>Your Receipt is Under Verification</span>
@@ -224,11 +232,13 @@ body {
 								<a href="../history.php" target="_blank" >Click here to upload Receipt
 								<div class="test-success text-center" id="data" style="margin-top: 20px;"><!-- Display Message here--></div>
 							 </div>';
+								}
                                         
 							 }
+							}
 							 
 							 
-							 else if ($safeDate!='0' && $verify=='1' && $verifytwo=='1'){
+							 if ($safeDate!='0' && $verify=='1' && $verifytwo=='1'){
           							$start = date_create("$safeDate");
           							$end   = date_create();
           							$diff  = date_diff( $start, $end);
